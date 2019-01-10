@@ -187,6 +187,443 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2016-10-16-shuffle-algorithm" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/2016-10-16-shuffle-algorithm/">Fisher–Yates shuffle 洗牌算法</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/24/2016-10-16-shuffle-algorithm/" class="archive-article-date">
+  	<time datetime="2018-12-24T04:04:27.443Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
+<p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg" alt=""></p>
+<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg" alt=""></p>
+<p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
+<ol>
+<li>写下从 1 到 N 的数字</li>
+<li>取一个从 1 到剩下的数字（包括这个数字）的随机数 k</li>
+<li>从低位开始，得到第 k 个数字（这个数字还没有被取出），把它写在独立的一个列表的最后一位</li>
+<li>重复第 2 步，直到所有的数字都被取出</li>
+<li>第 3 步写出的这个序列，现在就是原始数字的随机排列</li>
+</ol>
+<p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
+<h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
+<p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 <strong>O(n)</strong>。算法的伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- To shuffle an array a of n elements (indices 0..n-1):</span><br><span class="line">for i from n−1 downto 1 do</span><br><span class="line">     j ← random integer such that 0 ≤ j ≤ i</span><br><span class="line">     exchange a[j] and a[i]</span><br></pre></td></tr></table></figure>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">随机数取值范围</th>
+<th style="text-align:left">随机数</th>
+<th style="text-align:right">原始数据</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:right">1 2 3 4 5 6 7 8</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">1-8</td>
+<td style="text-align:left">6</td>
+<td style="text-align:right">1 2 3 4 5 7 8</td>
+<td style="text-align:left">6</td>
+</tr>
+<tr>
+<td style="text-align:left">1-7</td>
+<td style="text-align:left">2</td>
+<td style="text-align:right">1 7 3 4 5 8</td>
+<td style="text-align:left">2 6</td>
+</tr>
+<tr>
+<td style="text-align:left">1–6</td>
+<td style="text-align:left">6</td>
+<td style="text-align:right">1 7 3 4 5</td>
+<td style="text-align:left">8 2 6</td>
+</tr>
+<tr>
+<td style="text-align:left">1–5</td>
+<td style="text-align:left">1</td>
+<td style="text-align:right">5 7 3 4</td>
+<td style="text-align:left">1 8 2 6</td>
+</tr>
+<tr>
+<td style="text-align:left">1–4</td>
+<td style="text-align:left">3</td>
+<td style="text-align:right">5 7 4</td>
+<td style="text-align:left">3 1 8 2 6</td>
+</tr>
+<tr>
+<td style="text-align:left">1–3</td>
+<td style="text-align:left">3</td>
+<td style="text-align:right">5 7</td>
+<td style="text-align:left">4 3 1 8 2 6</td>
+</tr>
+<tr>
+<td style="text-align:left">1–2</td>
+<td style="text-align:left">1</td>
+<td style="text-align:right">7</td>
+<td style="text-align:left">5 4 3 1 8 2 6</td>
+</tr>
+</tbody>
+</table>
+<h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
+<iframe height="317" scrolling="no" src="//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/haoyang/pen/jrvrQq/" target="_blank" rel="noopener">Fisher–Yates shuffle</a> by Chuan shi (<a href="http://codepen.io/haoyang" target="_blank" rel="noopener">@haoyang</a>) on <a href="http://codepen.io" target="_blank" rel="noopener">CodePen</a>.<br></iframe>
+
+<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Fisher–Yates shuffle</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.shuffle = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> input = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = input.length<span class="number">-1</span>; i &gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> randomIndex = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">var</span> itemAtIndex = input[randomIndex];</span><br><span class="line"></span><br><span class="line">        input[randomIndex] = input[i];</span><br><span class="line">        input[i] = itemAtIndex;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用方式也很简单，直接用数组调用这个方法即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>].shuffle()</span><br><span class="line"></span><br><span class="line"><span class="comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle" target="_blank" rel="noopener">Fisher–Yates shuffle From Wikipedia</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">算法 shuffle 乱序 洗牌</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/24/2016-10-16-shuffle-algorithm/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
+    <article id="post-2016-07-07-git-clone-not-master-branch" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/2016-07-07-git-clone-not-master-branch/">Git 如何 clone 非 master 分支的代码</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/24/2016-07-07-git-clone-not-master-branch/" class="archive-article-date">
+  	<time datetime="2018-12-24T04:04:27.441Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@gitlab.xxx.com:xxxxx.git</span><br></pre></td></tr></table></figure>
+<p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p>
+<p><img src="https://ooo.0o0.ooo/2016/07/07/577e349ab42ed.png" alt="7f07c8f6deef169ef6be5103bbd3e932f8676bb1.png"></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><strong>刚刚开周会的时候，自己洋洋得意的分享我的解决方案，但是……经过与团队成员的的讨论，自己的方法弱爆了，现在把更优雅的方法写一下。原来写的方法并不太适合用在这个场景里。</strong> 我之前写的方法在文章后面。</p>
+<p>直接使用命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -r #查看远程分支</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -a #查看所有分支</span><br></pre></td></tr></table></figure>
+<p>会显示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">origin/HEAD -&gt; origin/master</span><br><span class="line">origin/daily/1.2.2</span><br><span class="line">origin/daily/1.3.0</span><br><span class="line">origin/daily/1.4.1</span><br><span class="line">origin/develop</span><br><span class="line">origin/feature/daily-1.0.0</span><br><span class="line">origin/master</span><br></pre></td></tr></table></figure>
+<p>然后直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout origin/daily/1.4.1</span><br></pre></td></tr></table></figure>
+<p>就好了。。。</p>
+<h2 id="原来的解决方案"><a href="#原来的解决方案" class="headerlink" title="原来的解决方案"></a>原来的解决方案</h2><p><strong>其实我原来写的这个方法更多的是：设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支。</strong></p>
+<p>我们在本地先建立一个分支，建议名称和远程的想要同步的分支名称一样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch daily/1.4.1</span><br></pre></td></tr></table></figure>
+<p>在切换到这个本地分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout daily/1.4.1</span><br><span class="line"># Switched to branch &apos;daily/1.4.1&apos;</span><br></pre></td></tr></table></figure>
+<p>接下来就可以去建立上游分支的关联了，但是这个命令比较长，不好记，我们可以直接先<code>pull</code>一下，git 会提示我们相应的操作和命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line">There is no tracking information for the current branch.</span><br><span class="line">Please specify which branch you want to merge with.</span><br><span class="line">See git-pull(1) for details.</span><br><span class="line"></span><br><span class="line">    git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"></span><br><span class="line">If you wish to set tracking information for this branch you can do so with:</span><br><span class="line"></span><br><span class="line">    git branch --set-upstream-to=origin/&lt;branch&gt; daily/1.4.1</span><br></pre></td></tr></table></figure>
+<p>我们看到最后一行，执行这个命令，即可完成与上游分支的关联。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch --set-upstream-to=origin/daily/1.4.1 daily/1.4.1</span><br><span class="line"># Branch daily/1.4.1 set up to track remote branch daily/1.4.1 from origin.</span><br></pre></td></tr></table></figure>
+<p>然后再<code>pull</code>一下就好了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git GitHub 分支</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/GitHub//" class="article-tag-list-link color2">GitHub</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/24/2016-07-07-git-clone-not-master-branch/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
+    <article id="post-2016-06-14-how-to-use-babel" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/24/2016-06-14-how-to-use-babel/">如何使用 babel</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/24/2016-06-14-how-to-use-babel/" class="archive-article-date">
+  	<time datetime="2018-12-24T04:04:27.439Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p><a href="https://babeljs.io/" target="_blank" rel="noopener">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
+<p><img src="https://babeljs.io/images/logo.svg" alt=""></p>
+<p>学习 Babel 可以通过其手册 Babel handbook。</p>
+<ul>
+<li><a href="https://github.com/thejameskyle/babel-handbook" target="_blank" rel="noopener">babel-handbook</a></li>
+</ul>
+<p>其中包含多语言版本，分为<a href="https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md" target="_blank" rel="noopener">用户手册</a>和<a href="https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md" target="_blank" rel="noopener">插件手册</a>。这是一个很好的学习 Babel 的资料。</p>
+<h2 id="babel-cli"><a href="#babel-cli" class="headerlink" title="babel-cli"></a>babel-cli</h2><p>在 node 和 npm 环境安装好的前提下，安装 babel，如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --global babel-cli</span><br></pre></td></tr></table></figure>
+<p>安装完成后就可以编译文件了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">babel main.js</span><br></pre></td></tr></table></figure>
+<p>编译后的文件显示在终端上，可以添加其他命令让它输出到指定文件下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">babel example.js --out-file compiled.js</span><br><span class="line">或</span><br><span class="line">babel example.js -o compiled.js</span><br></pre></td></tr></table></figure>
+<p>或将整个目录编译成一个新的目录：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">babel src --out-dir lib</span><br><span class="line">或</span><br><span class="line">babel src -d lib</span><br></pre></td></tr></table></figure>
+<p>但这很麻烦，并且并不是一个很好的解决方案，请看下一节项目内运行 babel-cli。</p>
+<h2 id="在项目内运行-babel-cli"><a href="#在项目内运行-babel-cli" class="headerlink" title="在项目内运行 babel-cli"></a>在项目内运行 babel-cli</h2><p>初始化项目</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<p>再安装 babel-cli</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-cli</span><br></pre></td></tr></table></figure>
+<p>项目中的<code>package.json</code>应该包含如下内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"learn-es6"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"babel-cli"</span>: <span class="string">"^6.10.1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加 npm scripts 命令。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "name": "learn-es6",</span><br><span class="line">  "version": "1.0.0",</span><br><span class="line"><span class="addition">+   "scripts": &#123;</span></span><br><span class="line"><span class="addition">+     "build": "babel src -d lib"</span></span><br><span class="line"><span class="addition">+   &#125;,</span></span><br><span class="line">  "devDependencies": &#123;</span><br><span class="line">    "babel-cli": "^6.10.1"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时在终端里运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>还不能成功编译，因为没有配置<code>.babelrc</code>文件。</p>
+<h2 id="配置-babelrc"><a href="#配置-babelrc" class="headerlink" title="配置.babelrc"></a>配置<code>.babelrc</code></h2><p>通过配置<code>.babelrc</code>来告诉 babel 来做什么。</p>
+<p>在项目的根路径下创建<code>.babelrc</code>文件。然后输入以下内容作为开始：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"presets"</span>: [],</span><br><span class="line">    <span class="attr">"plugins"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了让 babel 将 ES2015 转化为 ES5，我们要安装如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-preset-es2015</span><br></pre></td></tr></table></figure>
+<p>安装完成后在<code>.babelrc</code>中添加参数：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "presets": [</span><br><span class="line"><span class="addition">+       "es2015"</span></span><br><span class="line">    ],</span><br><span class="line">    "plugins": []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在在项目<code>src/main.js</code>中写一些 ES2015 的代码试试吧。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>在终端中输入命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>执行后终端中显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; learn-es6@1.0.0 build c:\gitWorkSpace\learn-es6</span><br><span class="line">&gt; babel src -d lib</span><br></pre></td></tr></table></figure>
+<p>然后可以看到目录中出现了<code>lib/main.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>即编译成功。</p>
+<h2 id="配置-jshintrc"><a href="#配置-jshintrc" class="headerlink" title="配置.jshintrc"></a>配置<code>.jshintrc</code></h2><p>若编辑器中安装了 jshint 语法检查的插件。默认对于 ES2015 的代码可能会报错或者警告，看着可能会不爽。我们可以在配置文件中将它设置为允许 ES2015 的模式。</p>
+<p>在项目根目录下创建文件<code>.jshintrc</code>。内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"asi"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"esversion"</span>: <span class="number">2015</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述文件我分别设置了，使用无分号模式，es 版本使用 2015。</p>
+<p>关于<code>.jshintrc</code>的更详细配置可以参见官方示例：<a href="https://github.com/jshint/jshint/blob/master/examples/.jshintrc" target="_blank" rel="noopener">https://github.com/jshint/jshint/blob/master/examples/.jshintrc</a></p>
+<p>好，babel 就说到这里，下面开始进入真正的 ES2015 的学习！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ES2015 ES6 ES5 babel</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/24/2016-06-14-how-to-use-babel/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2016-06-10-JavaScript-good-parts-note3" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
 	
@@ -1213,388 +1650,6 @@ tags:
              
         <!-- 目录内容结束 -->
   
-    <article id="post-2015-12-31-History-API" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/31/2015-12-31-History-API/">前端处理动态 url 和 pushStatus 的使用</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/31/2015-12-31-History-API/" class="archive-article-date">
-  	<time datetime="2015-12-31T15:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
-<ul>
-<li>webpack 自动构建</li>
-<li>AMD 模块化 js</li>
-<li>Sass 预处理 CSS</li>
-<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
-</ul>
-<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932" target="_blank" rel="noopener">前端如何处理动态url？</a></p>
-<p>这里我将问题描述如下：</p>
-<blockquote>
-<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932" target="_blank" rel="noopener">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
-<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932" target="_blank" rel="noopener">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
-<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
-</blockquote>
-<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
-<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
-<p>下面就来研究和实践一下吧。</p>
-<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
-<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
-<p>如下图，Chrome的历史记录：</p>
-<p><img src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
-<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
-<ul>
-<li><p><code>back()</code></p>
-<p>  在历史记录中后退</p>
-<pre><code>history.back();
-</code></pre></li>
-<li><p><code>forward()</code></p>
-<p>  在历史记录中前进</p>
-<pre><code>history.forward();
-</code></pre></li>
-<li><p><code>go()</code></p>
-<p>  移动到指定的历史记录点</p>
-<pre><code>history.go(-1);
-</code></pre><p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
-<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
-</li>
-<li><p><code>length</code></p>
-<p>  <code>length</code>为history的属性，显示history长度。</p>
-</li>
-</ul>
-<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/" target="_blank" rel="noopener">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
-<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
-<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
-<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
-<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
-<ul>
-<li><p><code>pushState(any data, string title, [string url])</code></p>
-<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
-<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
-<p>  例如，我们有这样一段代码：</p>
-<pre><code>&lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
-
-document.querySelector(&apos;#push1&apos;).addEventListener(&apos;click&apos;, function() {
-    history.pushState(&apos;abc&apos;,&apos;pushStatePageTitle&apos;,&apos;pushState.html&apos;);
-    document.querySelector(&apos;#length&apos;).innerHTML = history.length;//重新读取历史长度
-});
-</code></pre><p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
-</li>
-</ul>
-<ul>
-<li><p><code>replaceState(any data, string title, [string url])</code></p>
-<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
-</li>
-</ul>
-<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
-<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html" target="_blank" rel="noopener">History &amp; pjax demo - pushState</a></p>
-<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
-<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
-<p>Pjax的原理十分简单。</p>
-<ol>
-<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
-<li>使用 Ajax 请求新页面。</li>
-<li>将返回的 Html 替换到页面中。</li>
-<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
-</ol>
-<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
-<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
-<pre><code>window.onpopstate = function(event) {
-    console.log(event.state);
-    console.log(location);
-};
-</code></pre><p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
-<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js" target="_blank" rel="noopener">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
-<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History" target="_blank" rel="noopener">MDN History</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history" target="_blank" rel="noopener">MDN 操纵浏览器的历史记录</a></li>
-<li><a href="https://www.zhihu.com/question/20289254" target="_blank" rel="noopener">pjax 是如何工作的？ 知乎</a></li>
-<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html" target="_blank" rel="noopener">PJAX的实现与应用 小胡子哥</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html" target="_blank" rel="noopener">URL的井号-阮一峰</a></li>
-<li><a href="http://javascript.ruanyifeng.com/bom/history.html" target="_blank" rel="noopener">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
-<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/" target="_blank" rel="noopener">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
-<li><a href="http://www.clanfei.com/2012/09/1646.html" target="_blank" rel="noopener">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
-<li><a href="http://segmentfault.com/a/1190000002920768" target="_blank" rel="noopener">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
-<li><a href="https://github.com/Coffcer/coffce-pjax" target="_blank" rel="noopener">coffce-pjax</a></li>
-<li><a href="https://github.com/browserstate/history.js" target="_blank" rel="noopener">History.js</a></li>
-<li><a href="https://github.com/defunkt/jquery-pjax" target="_blank" rel="noopener">defunkt/jquery-pjax GitHub</a></li>
-<li><a href="https://github.com/welefen/pjax" target="_blank" rel="noopener">welefen/pjax</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript Ajax URL HistoryApi pushState pjax</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/12/31/2015-12-31-History-API/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2015-07-24-low-IE-click-empty-block-bug" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/24/2015-07-24-low-IE-click-empty-block-bug/">在低版本 IE 中点击空 block 元素的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2015/07/24/2015-07-24-low-IE-click-empty-block-bug/" class="archive-article-date">
-  	<time datetime="2015-07-23T16:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-07-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>当我们点击一个空的、没有任何内容的 div 或者其他块级元素时。在 IE11 以下，是没有反应的。</p>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>这类问题使用场景还是很普遍的。比如 UI 给了一张大图，要点击图上的某一块位置的时候。可以用一个空的 div 定位到相应的位置，然后对它进行绑定事件。</p>
-<hr>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>解决方法很简单，即给这个块级元素填充任意颜色，然后将其透明度设置为0。代码如下：</p>
-<pre><code>background-color: #fff;
-opacity: 0;
-filter:alpha(opacity=0);
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">IE CSS 兼容性 HTML</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CSS//" class="article-tag-list-link color4">CSS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/07/24/2015-07-24-low-IE-click-empty-block-bug/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2015-07-09-JavaScript-Net" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/09/2015-07-09-JavaScript-Net/">JavaScript 阶段总结</a>
-    </h1>
-  
-
-        
-        <a href="/2015/07/09/2015-07-09-JavaScript-Net/" class="archive-article-date">
-  	<time datetime="2015-07-08T16:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-07-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
-<p><img src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JavaScript HTML CSS 思维导图 技能树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JavaScript//" class="article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/07/09/2015-07-09-JavaScript-Net/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1609,7 +1664,7 @@ filter:alpha(opacity=0);
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 liupeng
+    		&copy; 2019 liupeng
     	</div>
 		
       <!--统计start-->
@@ -1875,6 +1930,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows vc 应用#文章标签 可以省略</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
             
             <div class="clearfix"></div>

@@ -187,6 +187,235 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-项目展示" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/10/项目展示/">项目展示</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/10/项目展示/" class="archive-article-date">
+  	<time datetime="2019-01-10T05:05:18.955Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="项目展示"><a href="#项目展示" class="headerlink" title="项目展示"></a>项目展示</h1><p><img src="/imgs/ColorProgress.png" alt="1"><br><img src="/imgs/drawprogressbar.png" alt="2"><br><img src="/imgs/navlistview.png" alt="3"><br><img src="/imgs/system.png" alt="4"><br><img src="/imgs/chat.png" alt="5"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        <div class="article-pop-out tagcloud">
+          <i class="icon-tuding"></i>
+          <a class="article-tag-list-link color3">置顶</a>
+        </div>
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目展示</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/项目展示//" class="article-tag-list-link color5">项目展示</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/10/项目展示/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
+    <article id="post-2018-12-27-VC中常用的20种方法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/2018-12-27-VC中常用的20种方法/">VC中常用的20种方法</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/2018-12-27-VC中常用的20种方法/" class="archive-article-date">
+  	<time datetime="2018-12-27T20:18:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="VC中常用的20种方法"><a href="#VC中常用的20种方法" class="headerlink" title="VC中常用的20种方法"></a>VC中常用的20种方法</h1><h2 id="打开CD-ROM"><a href="#打开CD-ROM" class="headerlink" title="打开CD-ROM"></a>打开CD-ROM</h2><p>mciSendString(“Set cdAudio door open wait”,NULL,0,NULL); </p>
+<h2 id="关闭CD-ROM"><a href="#关闭CD-ROM" class="headerlink" title="关闭CD_ROM"></a>关闭CD_ROM</h2><p>mciSendString(“Set cdAudio door closed wait”,NULL,0,NULL); </p>
+<h2 id="关闭计算机"><a href="#关闭计算机" class="headerlink" title="关闭计算机"></a>关闭计算机</h2><p>OSVERSIONINFO OsVersionInfo; //包含操作系统版本信息的数据结构<br>OsVersionInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);<br>GetVersionEx(&amp;OsVersionInfo); //获取操作系统版本信息<br>if(OsVersionInfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)<br>{<br>//Windows98,调用ExitWindowsEx()函数重新启动计算机 </p>
+<p>DWORD dwReserved;<br>ExitWindowsEx(EWX_REBOOT,dwReserved); //可以改变第一个参数，实现注销用户、<br>//关机、关闭电源等操作<br>// 退出前的一些处理程序<br>} </p>
+<h2 id="重启计算机"><a href="#重启计算机" class="headerlink" title="重启计算机"></a>重启计算机</h2><p>typedef int (CALLBACK *SHUTDOWNDLG)(int); //显示关机对话框函数的指针<br>HINSTANCE hInst = LoadLibrary(“shell32.dll”); //装入shell32.dll<br>SHUTDOWNDLG ShutDownDialog; //指向shell32.dll库中显示关机对话框函数的指针<br>if(hInst != NULL)<br>{<br>//获得函数的地址并调用之<br>ShutDownDialog = (SHUTDOWNDLG)GetProcAddress(hInst,(LPSTR)60); </p>
+<p>(*ShutDownDialog)(0);<br>} </p>
+<h2 id="枚举所有字体"><a href="#枚举所有字体" class="headerlink" title="枚举所有字体"></a>枚举所有字体</h2><p>LOGFONT lf;<br>lf.lfCharSet = DEFAULT_CHARSET; // Initialize the LOGFONT structure<br>strcpy(lf.lfFaceName,””);<br>CClientDC dc (this);<br>// Enumerate the font families<br>::EnumFontFamiliesEx((HDC) dc,&amp;lf,<br>(FONTENUMPROC) EnumFontFamProc,(LPARAM) this,0);<br>//枚举函数<br>int CALLBACK EnumFontFamProc(LPENUMLOGFONT lpelf,<br>LPNEWTEXTMETRIC lpntm,DWORD nFontType,long lparam) </p>
+<p>{<br>// Create a pointer to the dialog window<br>CDay7Dlg<em> pWnd = (CDay7Dlg</em>) lparam;<br>// add the font name to the list box<br>pWnd -&gt;m_ctlFontList.AddString(lpelf -&gt;elfLogFont.lfFaceName);<br>// Return 1 to continue font enumeration<br>return 1;<br>}<br>其中m_ctlFontList是一个列表控件变量 </p>
+<p>一次只运行一个程序实例，如果已运行则退出<br>if( FindWindow(NULL,”程序标题”)) exit(0); </p>
+<p>得到当前鼠标所在位置<br>CPoint pt;<br>GetCursorPos(&amp;pt); //得到位置 </p>
+<p>上下文菜单事件触发事件：<br>OnContextMenu事件 </p>
+<p>// 显示和隐藏程序菜单<br>CWnd *pWnd=AfxGetMainWnd();<br>if(b_m) //隐藏菜单<br>{<br>pWnd-&gt;SetMenu(NULL);<br>pWnd-&gt;DrawMenuBar();<br>b_m=false;<br>}<br>else<br>{<br>CMenu menu;<br>menu.LoadMenu(IDR_MAINFRAME); ////显示菜单 也可改变菜单项<br>pWnd-&gt;SetMenu(&amp;menu);<br>pWnd-&gt;DrawMenuBar();<br>b_m=true;<br>menu.Detach();<br>} </p>
+<h2 id="获取可执行文件的图标"><a href="#获取可执行文件的图标" class="headerlink" title="获取可执行文件的图标"></a>获取可执行文件的图标</h2><p>HICON hIcon=::ExtractIcon(AfxGetInstanceHandle(),_T(“NotePad.exe”),0);<br>if (hIcon &amp;&amp;hIcon!=(HICON)-1)<br>{<br>pDC-&gt;DrawIcon(10,10,hIcon); </p>
+<p>}<br>DestroyIcon(hIcon); </p>
+<h2 id="窗口自动靠边程序演示"><a href="#窗口自动靠边程序演示" class="headerlink" title="窗口自动靠边程序演示"></a>窗口自动靠边程序演示</h2><p>BOOL AdjustPos(CRect* lpRect)<br>{//自动靠边<br>int iSX=GetSystemMetrics(SM_CXFULLSCREEN);<br>int iSY=GetSystemMetrics(SM_CYFULLSCREEN);<br>RECT rWorkArea;<br>BOOL bResult = SystemParametersInfo(SPI_GETWORKAREA, sizeof(RECT), &amp;rWorkAre<br>a, 0);<br>CRect rcWA;<br>if(!bResult)<br>{//如果调用不成功就利用GetSystemMetrics获取屏幕面积<br>rcWA=CRect(0,0,iSX,iSY);<br>}<br>else<br>rcWA=rWorkArea;<br>int iX=lpRect-&gt;left;<br>int iY=lpRect-&gt;top; </p>
+<p>if(iX &lt; rcWA.left + DETASTEP &amp;&amp; iX!=rcWA.left)<br>{//调整左<br>//pWnd-&gt;SetWindowPos(NULL,rcWA.left,iY,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(rcWA.left-iX,0);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iY &lt; rcWA.top + DETASTEP &amp;&amp; iY!=rcWA.top)<br>{//调整上<br>//pWnd-&gt;SetWindowPos(NULL ,iX,rcWA.top,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(0,rcWA.top-iY);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iX + lpRect-&gt;Width() &gt; rcWA.right - DETASTEP &amp;&amp; iX !=rcWA.right-lpRect-&gt;W </p>
+<p>idth())<br>{//调整右<br>//pWnd-&gt;SetWindowPos(NULL ,rcWA.right-rcW.Width(),iY,0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(rcWA.right-lpRect-&gt;right,0);<br>AdjustPos(lpRect);<br>return TRUE;<br>}<br>if(iY + lpRect-&gt;Height() &gt; rcWA.bottom - DETASTEP &amp;&amp; iY !=rcWA.bottom-lpRect<br>-&gt;Height())<br>{//调整下<br>//pWnd-&gt;SetWindowPos(NULL ,iX,rcWA.bottom-rcW.Height(),0,0,SWP_NOSIZE);<br>lpRect-&gt;OffsetRect(0,rcWA.bottom-lpRect-&gt;bottom);<br>return TRUE;<br>}<br>return FALSE;<br>}<br>//然后在ONMOVEING事件中使用所下过程调用 </p>
+<p>CRect r=<em>pRect;<br>AdjustPos(&amp;r); 
+</em>pRect=(RECT)r; </p>
+<p>给系统菜单添加一个菜单项<br>给系统菜单添加一个菜单项需要进行下述三个步骤：<br>首先，使用Resource Symbols对话（在View菜单中选择Resource Symbols．．．可以显<br>示该对话）定义菜单项ID，该ID应大于0x0F而小于0xF000；<br>其次，调用CWnd::GetSystemMenu获取系统菜单的指针并调用CWnd:: Appendmenu将菜单<br>项添加到菜单中。下例给系统菜单添加两个新的<br>int CMainFrame:: OnCreate (LPCREATESTRUCT lpCreateStruct)<br>{<br>…<br>//Make sure system menu item is in the right range. </p>
+<p>ASSERT(IDM_MYSYSITEM&lt;0xF000);<br>//Get pointer to system menu.<br>CMenu* pSysMenu=GetSystemMenu(FALSE);<br>ASSERT_VALID(pSysMenu);<br>//Add a separator and our menu item to system menu.<br>CString StrMenuItem(_T (“New menu item”));<br>pSysMenu-&gt;AppendMenu(MF_SEPARATOR);<br>pSysMenu-&gt;AppendMenu(MF_STRING, IDM_MYSYSITEM, StrMenuItem);<br>…<br>} </p>
+<h2 id="运行其它程序"><a href="#运行其它程序" class="headerlink" title="运行其它程序"></a>运行其它程序</h2><p>//1、运行EMAIL或网址<br>char szMailAddress[80];<br>strcpy(szMailAddress,”mailto:<a href="mailto:netvc@21cn.com" target="_blank" rel="noopener">netvc@21cn.com</a>“);<br>ShellExecute(NULL, “open”, szMailAddress, NULL, NULL, SW_SHOWNORMAL); </p>
+<p>// 2、运行可执行程序<br>WinExec(“notepad.exe”,SW_SHOW); //运行计事本 </p>
+<h2 id="动态增加或删除菜单"><a href="#动态增加或删除菜单" class="headerlink" title="动态增加或删除菜单"></a>动态增加或删除菜单</h2><p>1、 增加菜单<br>//添加<br>CMenu <em>mainmenu;<br>mainmenu=AfxGetMainWnd()-&gt;GetMenu(); //得到主菜单<br>(mainmenu-&gt;GetSubMenu (0))-&gt;AppendMenu (MF_SEPARATOR);//添加分隔符<br>(mainmenu-&gt;GetSubMenu (0))-&gt;AppendMenu(MF_STRING,ID_APP_ABOUT,_T(“Always on<br>&amp;Top”)); //添加新的菜单项<br>DrawMenuBar(); //重画菜单<br>2、 删除菜单<br>//删除<br>CMenu </em>mainmenu;<br>mainmenu=AfxGetMainWnd()-&gt;GetMenu(); //得到主菜单 </p>
+<p>CString str ;<br>for(int i=(mainmenu-&gt;GetSubMenu (0))-&gt;GetMenuItemCount()-1;i&gt;=0;i–) //取得菜<br>单的项数。<br>{<br>(mainmenu-&gt;GetSubMenu (0))-&gt;GetMenuString(i,str,MF_BYPOSITION);<br>//将指定菜单项的标签拷贝到指定的缓冲区。MF_BYPOSITION的解释见上。<br>if(str==”Always on &amp;Top”) //如果是刚才我们增加的菜单项，则删除。<br>{<br>(mainmenu-&gt;GetSubMenu (0))-&gt;DeleteMenu(i,MF_BYPOSITION);<br>break;<br>} </p>
+<h2 id="改变应用程序的图标"><a href="#改变应用程序的图标" class="headerlink" title="改变应用程序的图标"></a>改变应用程序的图标</h2><p>静态更改： 修改图标资源IDR_MAINFRAME。它有两个图标，一个是16*16的，另一个是3 </p>
+<p>2*32的，注意要一起修改。<br>动态更改： 向主窗口发送WM_SETICON消息.代码如下：<br>HICON hIcon=AfxGetApp()-&gt;LoadIcon(IDI_ICON);<br>ASSERT(hIcon);<br>AfxGetMainWnd()-&gt;SendMessage(WM_SETICON,TRUE,(LPARAM)hIcon); </p>
+<h2 id="另一种改变窗口标题的方法"><a href="#另一种改变窗口标题的方法" class="headerlink" title="另一种改变窗口标题的方法"></a>另一种改变窗口标题的方法</h2><p>使用语句 CWnd<em> m_pCWnd = AfxGetMainWnd( )，然后，再以如下形式调用SetWindowTe<br>xt()函数：<br>SetWindowText( </em>m_pCWnd,(LPCTSTR)m_WindowText)；// m_WindowText可以是一个CSt<br>ring类的变量。 </p>
+<h2 id="剪切板上通过增强元文件拷贝图像数据"><a href="#剪切板上通过增强元文件拷贝图像数据" class="headerlink" title="剪切板上通过增强元文件拷贝图像数据"></a>剪切板上通过增强元文件拷贝图像数据</h2><p>下面代码拷贝通过元文件拷贝图像数据到任何应用程序，其可以放置在CView派生类的函 数中。<br>CMetaFileDC * m_pMetaDC = new CMetaFileDC();<br>m_pMetaDC-&gt;CreateEnhanced(GetDC(),NULL,NULL,”whatever”);<br>//draw meta file<br>//do what ever you want to do: bitmaps, lines, text…<br>//close meta file dc and prepare for clipboard;<br>HENHMETAFILE hMF = m_pMetaDC-&gt;CloseEnhanced();<br>//copy to clipboard<br>OpenClipboard();<br>EmptyClipboard();<br>::SetClipboardData(CF_ENHMETAFILE,hMF);<br>CloseClipboard(); </p>
+<p>//DeleteMetaFile(hMF);<br>delete m_pMetaDC; </p>
+<h2 id="剪切板上文本数据的传送"><a href="#剪切板上文本数据的传送" class="headerlink" title="剪切板上文本数据的传送"></a>剪切板上文本数据的传送</h2><p>把文本放置到剪接板上：<br>CString source;<br>//put your text in source<br>if(OpenClipboard())<br>{<br>HGLOBAL clipbuffer;<br>char <em> buffer;<br>EmptyClipboard();<br>clipbuffer = GlobalAlloc(GMEM_DDESHARE, source.GetLength()+1);<br>buffer = (char</em>)GlobalLock(clipbuffer);<br>strcpy(buffer, LPCSTR(source));<br>GlobalUnlock(clipbuffer);<br>SetClipboardData(CF_TEXT,clipbuffer);<br>CloseClipboard();<br>} </p>
+<h2 id="从剪接板上获取文本："><a href="#从剪接板上获取文本：" class="headerlink" title="从剪接板上获取文本："></a>从剪接板上获取文本：</h2><p>char <em> buffer;<br>if(OpenClipboard())<br>{<br>buffer = (char</em>)GetClipboardData(CF_TEXT);<br>//do something with buffer here<br>//before it goes out of scope<br>}<br>CloseClipboard(); </p>
+<h2 id="将捕捉屏幕图像到剪切版中"><a href="#将捕捉屏幕图像到剪切版中" class="headerlink" title="将捕捉屏幕图像到剪切版中"></a>将捕捉屏幕图像到剪切版中</h2><p>void CShowBmpInDlgDlg::OnCutScreen()<br>{<br>ShowWindow(SW_HIDE);<br>RECT r_bmp={0,0,::GetSystemMetrics(SM_CXSCREEN),<br>::GetSystemMetrics(SM_CYSCREEN)};<br>HBITMAP hBitmap;<br>hBitmap=CopyScreenToBitmap(&amp;r_bmp); </p>
+<p>//hWnd为程序窗口句柄<br>if (OpenClipboard())<br>{<br>EmptyClipboard();<br>SetClipboardData(CF_BITMAP, hBitmap);<br>CloseClipboard();<br>}<br>ShowWindow(SW_SHOW);<br>}<br>HBITMAP CShowBmpInDlgDlg::CopyScreenToBitmap(LPRECT lpRect)<br>{<br>//lpRect 代表选定区域<br>{<br>HDC hScrDC, hMemDC;<br>// 屏幕和内存设备描述表<br>HBITMAP hBitmap, hOldBitmap;<br>// 位图句柄<br>int nX, nY, nX2, nY2;<br>// 选定区域坐标<br>int nWidth, nHeight;<br>// 位图宽度和高度<br>int xScrn, yScrn;<br>// 屏幕分辨率 </p>
+<p>// 确保选定区域不为空矩形<br>if (IsRectEmpty(lpRect))<br>return NULL;<br>//为屏幕创建设备描述表<br>hScrDC = CreateDC(“DISPLAY”, NULL, NULL, NULL);<br>//为屏幕设备描述表创建兼容的内存设备描述表<br>hMemDC = CreateCompatibleDC(hScrDC);<br>// 获得选定区域坐标<br>nX = lpRect-&gt;left;<br>nY = lpRect-&gt;top;<br>nX2 = lpRect-&gt;right;<br>nY2 = lpRect-&gt;bottom;<br>// 获得屏幕分辨率<br>xScrn = GetDeviceCaps(hScrDC, HORZRES);<br>yScrn = GetDeviceCaps(hScrDC, VERTRES);<br>//确保选定区域是可见的<br>if (nX&lt;0) </p>
+<p>nX = 0;<br>if (nY&lt;0)<br>nY = 0;<br>if (nX2&gt;xScrn)<br>nX2 = xScrn;<br>if (nY2&gt;yScrn)<br>nY2 = yScrn;<br>nWidth = nX2 - nX;<br>nHeight = nY2 - nY;<br>// 创建一个与屏幕设备描述表兼容的位图<br>hBitmap = CreateCompatibleBitmap<br>(hScrDC, nWidth, nHeight);<br>// 把新位图选到内存设备描述表中<br>hOldBitmap =(HBITMAP)SelectObject(hMemDC, hBitmap);<br>// 把屏幕设备描述表拷贝到内存设备描述表中<br>BitBlt(hMemDC, 0, 0, nWidth, nHeight,<br>hScrDC, nX, nY, SRCCOPY);<br>//得到屏幕位图的句柄<br>hBitmap = (HBITMAP)SelectObject(hMemDC, hOldBitmap); </p>
+<p>//清除<br>DeleteDC(hScrDC);<br>DeleteDC(hMemDC);<br>// 返回位图句柄<br>return hBitmap;<br>}<br>} </p>
+<h2 id="如何将位图缩放显示在Static控件中"><a href="#如何将位图缩放显示在Static控件中" class="headerlink" title="如何将位图缩放显示在Static控件中"></a>如何将位图缩放显示在Static控件中</h2><p>// 在Staic控件内显示位图<br>void CShowBmpInDlgDlg::ShowBmpInStaic()<br>{<br>CBitmap hbmp;<br>HBITMAP hbitmap;<br>// 将pStatic指向要显示的地方<br>CStatic <em>pStaic;<br>pStaic=(CStatic</em>)GetDlgItem(IDC_IMAGE);<br>//装载资源 MM.bmp是我的一个文件名，用你的替换<br>hbitmap=(HBITMAP)::LoadImage (::AfxGetInstanceHandle(),”MM.bmp”,<br>IMAGE_BITMAP,0,0,LR_LOADFROMFILE|LR_CREATEDIBSECTION); </p>
+<p>hbmp.Attach(hbitmap);<br>// 获取图片格式<br>BITMAP bm;<br>hbmp.GetBitmap(&amp;bm);<br>CDC dcMem;<br>dcMem.CreateCompatibleDC(GetDC());<br>CBitmap <em>poldBitmap=(CBitmap</em>)dcMem.SelectObject(hbmp);<br>CRect lRect;<br>pStaic-&gt;GetClientRect(&amp;lRect);<br>// 显示位图<br>pStaic-&gt;GetDC()-&gt;StretchBlt(lRect.left ,lRect.top ,lRect.Width(),lRect.Heigh<br>t(),<br>&amp;dcMem,0 ,0,bm.bmWidth,bm.bmHeight,SRCCOPY);<br>dcMem.SelectObject(&amp;poldBitmap);<br>}</p>
+<p>‘’’</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        <div class="article-pop-out tagcloud">
+          <i class="icon-tuding"></i>
+          <a class="article-tag-list-link color3">置顶</a>
+        </div>
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">windows vc 应用</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/vc//" class="article-tag-list-link color3">vc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/2018-12-27-VC中常用的20种方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
     <article id="post-2015-02-10-welcome-to-jekyll" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
 	
@@ -256,6 +485,105 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2015/02/10/2015-02-10-welcome-to-jekyll/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        	
+    </div>
+	
+</aside>
+
+
+
+
+<!-- 目录内容 -->
+             
+        <!-- 目录内容结束 -->
+  
+    <article id="post-TCP_UDP" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+	
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/TCP_UDP/">TCP_UDP</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/02/TCP_UDP/" class="archive-article-date">
+  	<time datetime="2019-01-02T03:45:40.969Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="对于TCP连接："><a href="#对于TCP连接：" class="headerlink" title="对于TCP连接："></a>对于TCP连接：</h3><p>1.服务器端1）创建套接字create；2）绑定端口号bind；3）监听连接listen；4）接受连接请求accept，并返回新的套接字；5）用新返回的套接字recv/send；6）关闭套接字。</p>
+<p>2.客户端1）创建套接字create; 2）发起建立连接请求connect; 3）发送/接收数据send/recv；4）关闭套接字。</p>
+<p>TCP总结：</p>
+<p>Server端：create – bind – listen–  accept–  recv/send– close</p>
+<p>Client端：create——- conncet——send/recv——close.</p>
+<h3 id="对于UDP连接："><a href="#对于UDP连接：" class="headerlink" title="对于UDP连接："></a>对于UDP连接：</h3><p>1.服务器端:1）创建套接字create；2）绑定端口号bind；3）接收/发送消息recvfrom/sendto；4）关闭套接字。</p>
+<p>2.客户端:1）创建套接字create；2）发送/接收消息sendto/recvfrom；3）关闭套接字.</p>
+<p>UDP总结:</p>
+<p>Server端：create—-bind —-recvfrom/sendto—-close</p>
+<p>Client端：create—-  sendto/recvfrom—-close</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">windows tcp udp 网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/windows//" class="article-tag-list-link color3">windows</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/02/TCP_UDP/">展开全文 >></a>
         </p>
       
 
@@ -883,395 +1211,6 @@ var _hmt = _hmt || [];
              
         <!-- 目录内容结束 -->
   
-    <article id="post-2018-01-13-setup-mysql-inubuntu" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/2018-01-13-setup-mysql-inubuntu/">Ubuntu 16.04 下MySQL的安装</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/24/2018-01-13-setup-mysql-inubuntu/" class="archive-article-date">
-  	<time datetime="2018-12-24T04:04:27.463Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>1， 打开终端：</p>
-<blockquote>
-<p> sudo apt-get install mysql-server</p>
-</blockquote>
-<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
-<p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
-<p>4 ，接下来，会继续让我们输入一次密码</p>
-<p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
-<p>6， 这时候已经安装完成了，我们需要验证一下是否安装上了mysql-server</p>
-<blockquote>
-<p> mysql -u root -p</p>
-</blockquote>
-<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">snakeson@snakeson-Inspiron<span class="number">-5421</span>:~$ mysql -u root -p</span><br><span class="line">Enter password: </span><br><span class="line">Welcome to the MySQL monitor.  Commands end <span class="keyword">with</span> ; or \g.</span><br><span class="line">Your MySQL connection id is <span class="number">5</span></span><br><span class="line">Server version: <span class="number">5.7</span><span class="number">.20</span><span class="number">-0</span>ubuntu0<span class="number">.16</span><span class="number">.04</span><span class="number">.1</span> (Ubuntu)</span><br><span class="line"></span><br><span class="line">Copyright (c) <span class="number">2000</span>, <span class="number">2017</span>, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark <span class="keyword">of</span> Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks <span class="keyword">of</span> their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">'help;'</span> or <span class="string">'\h'</span> <span class="keyword">for</span> help. Type <span class="string">'\c'</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
-<p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">linux ubuntu16.04 工具软件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux//" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/24/2018-01-13-setup-mysql-inubuntu/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2018-01-13-close-win10-update" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/2018-01-13-close-win10-update/">win10 关闭更新</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/24/2018-01-13-close-win10-update/" class="archive-article-date">
-  	<time datetime="2018-12-24T04:04:27.462Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
-<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>2 在运行处输入 “services.msc”   点击确定。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>3 在弹出来的服务中，找到“Windows Update”</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>4 选择禁用</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>会多出这两个位置，这样子就设置成功了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">win10 工具软件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/win10//" class="article-tag-list-link color1">win10</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/24/2018-01-13-close-win10-update/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
-    <article id="post-2018-01-09-python_crawl_words" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-	
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/24/2018-01-09-python_crawl_words/">News_scrapy_redis 框架系统</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/24/2018-01-09-python_crawl_words/" class="archive-article-date">
-  	<time datetime="2018-12-24T04:04:27.460Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
-<h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>1、代码复用，功能模块化。可以支持上千个网站的数据爬取；</p>
-<p>2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换；</p>
-<p>3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善；</p>
-<p>4、后续扩展为分布式结构；</p>
-<p>5、支持功能模块的易调整；</p>
-<h2 id="框架使用说明"><a href="#框架使用说明" class="headerlink" title="框架使用说明"></a>框架使用说明</h2><p><strong>News_scrapy_redis4. <a href="https://github.com/xudailong/News_scrapy_redis.git" target="_blank" rel="noopener">github地址</a></strong></p>
-<ol>
-<li><p><code>News_scrapy_redis</code> 基于<code>scrapy_redis</code>实现数据的增量爬取（含去重），支持分布式，支持异常日志等输出，功能模块化。</p>
-</li>
-<li><p>树结构：</p>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├─.idea</span><br><span class="line">├─Daily_crawler</span><br><span class="line">├─ETL</span><br><span class="line">├─log</span><br><span class="line">├─News_scrapy</span><br><span class="line">│  ├─spiders</span><br><span class="line">│  │  └─__pycache__</span><br><span class="line">│  └─__pycache__</span><br><span class="line">├─News_simhash</span><br><span class="line">└─News_statistics</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>各模块说明：</p>
-<blockquote>
-<p>Daily_crawler：    </p>
-</blockquote>
-<ul>
-<li><code>daily_crawler.cron crontab</code>的定时文件, 定时运行<code>start_crawl.sh</code>脚本</li>
-<li><code>start_crawl.sh</code> 启动爬虫模块，并将每次爬取所花费的时间 写入 log/run_time.txt</li>
-<li><code>push_urls.py</code> 每次在爬虫之前运行，清空调度队列，并将start_url push到调度队列中</li>
-<li><p><code>news_crawl.sh</code> 执行爬虫模块（增量爬取）， 并自动进行相似文档去重，ETL, 存入mongodb</p>
-<blockquote>
-<p>ETL:（暂时用不到）</p>
-</blockquote>
-</li>
-<li><p><code>/Model</code> 存放训练好的词典，语料，TF-IDF，LDA， word2vec模型</p>
-</li>
-<li><code>auto_embedding.py</code> 新闻语料的清洗，以及自动化生成新闻的标题和内容embedding</li>
-<li><code>auto_embedding_simhash.py</code> 增加了自动化相似文档的去重</li>
-<li><code>stop_words</code> 常用的中文停留词</li>
-<li><code>train_step1</code> 训练LDA模型</li>
-<li><p><code>train_step2</code> 训练LDA模型</p>
-<blockquote>
-<p>log:</p>
-</blockquote>
-</li>
-<li><p><code>auto_embedding_simhash.log</code> 执行auto_embedding_simhash.py的日志文件</p>
-</li>
-<li><code>crawler.log</code> 执行scrapy-redis爬虫模块的日志文件</li>
-<li><code>news_count.log</code> 执行news_statistics.py的日志文件</li>
-<li><p><code>run_time.txt</code> 每次执行爬虫脚本的运行时间</p>
-<blockquote>
-<p>News_data:</p>
-</blockquote>
-</li>
-<li><p>每个文件夹是抓每天从各个网站抓取到的新闻</p>
-<blockquote>
-<p>News_scrapy:</p>
-</blockquote>
-</li>
-<li><p>基于scrapy-redis的爬虫模块，在scrapy的基础上修改得到</p>
-</li>
-<li><p>各大网站数据的爬取解析工作主要在该文件中进行</p>
-<blockquote>
-<p>News_simhash（此处只需要进行title的去重）:</p>
-</blockquote>
-</li>
-<li><p>实现相似文档的去重</p>
-</li>
-<li>automatic_simhash.py 自动实现相似文档的去重（仅基于新闻内容）</li>
-<li>content_index.pkl 序列化的新闻内容SimhashIndex类，相当于所有新闻sinhash_value的一张表，并且随着抓取的新闻越来越多，该表会不断增大title_index.pkl 序列化的新闻标题SimhashIndex类， 未使用</li>
-<li><code>generate_simhash_index.py</code> 初始化这张Simhash_index，生成content和title的Simhash_index</li>
-<li><code>near_duplicates.py</code> 对初始化的Simhash_index进行相似新闻内容的去重</li>
-<li><p>test.py 测试content_index.pkl中content_index类新闻的数量</p>
-<blockquote>
-<p>News_statistics:</p>
-</blockquote>
-</li>
-<li><p><code>news_count.json</code> 每天从各个网站抓取的新闻数量</p>
-</li>
-<li><code>news_statistics.py</code> 统计新闻增量的脚本</li>
-</ul>
-</li>
-</ol>
-<h2 id="框架环境"><a href="#框架环境" class="headerlink" title="框架环境"></a>框架环境</h2><ol>
-<li>Redis环境环境</li>
-<li>scrapy框架环境</li>
-<li>python3环境环境</li>
-</ol>
-<h2 id="框架完善"><a href="#框架完善" class="headerlink" title="框架完善"></a>框架完善</h2><ol>
-<li>IP代理池</li>
-<li>cookies池 </li>
-<li>其他</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">scrapy_redis 爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/爬虫//" class="article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/24/2018-01-09-python_crawl_words/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        	
-    </div>
-	
-</aside>
-
-
-
-
-<!-- 目录内容 -->
-             
-        <!-- 目录内容结束 -->
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1286,7 +1225,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 liupeng
+    		&copy; 2019 liupeng
     	</div>
 		
       <!--统计start-->
@@ -1552,6 +1491,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">windows api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows vc 应用#文章标签 可以省略</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows vc 应用</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目展示</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">windows tcp udp 网络</a>
               </li>
             
             <div class="clearfix"></div>
